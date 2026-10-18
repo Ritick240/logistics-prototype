@@ -1,7 +1,7 @@
 // Deployment settings. Change these when the site goes live.
 
 /** Public URL of the site, used for canonical links and social tags. */
-export const SITE_URL = 'https://www.example.com';
+export const SITE_URL = 'https://ritick240.github.io/logistics-prototype';
 
 /**
  * Where form submissions are POSTed (as multipart/form-data, with a `form` field naming the form).
