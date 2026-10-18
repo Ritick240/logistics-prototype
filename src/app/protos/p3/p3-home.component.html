@@ -1,0 +1,225 @@
+<!-- Hero: mesh gradient + floating glass cards -->
+<section class="hero">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+  <div class="wrap hero__grid">
+    <div class="hero__copy" reveal>
+      <span class="chip">✦ Welcome to {{ brand.name }}</span>
+      <h1>Freight that moves on your schedule.</h1>
+      <p>Truckload, intermodal, drayage and hazmat moves — coordinated by people who care, visible from first mile to last.</p>
+      <div class="row">
+        <a class="btn3 btn3--w" routerLink="/request-a-quote">Request A Quote</a>
+        <a class="btn3 btn3--glass" routerLink="/" fragment="services">Our services <app-icon name="arrow" [size]="16" /></a>
+      </div>
+    </div>
+    <div class="hero__vis" reveal>
+      <div class="glass track">
+        <div class="track__top"><span>Shipment</span><b>On schedule</b></div>
+        <div class="route">
+          <div><small>Origin</small><strong>Newark, NJ</strong></div>
+          <div class="route__line"><app-icon name="truck" [size]="20" /></div>
+          <div><small>Destination</small><strong>Columbus, OH</strong></div>
+        </div>
+        <div class="bar"><i></i></div>
+        <small class="track__note">Sample tracking view</small>
+      </div>
+      <div class="glass stats">
+        @for (s of stats; track s.label) {
+          <div><strong [countUp]="s.value" [prefix]="s.prefix ?? ''" [suffix]="s.suffix"></strong><span>{{ s.label }}</span></div>
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Values -->
+<section class="wrap values">
+  @for (v of values; track v.title) {
+    <div class="card3 value" reveal>
+      <div class="ic"><app-icon [name]="v.icon" [size]="24" /></div>
+      <h3>{{ v.title }}</h3><p>{{ v.text }}</p>
+    </div>
+  }
+</section>
+
+<!-- About -->
+<section class="wrap sec about">
+  <div class="about__img" reveal>
+    <img [src]="images.about" alt="Warehouse team" />
+    <div class="glass about__float"><strong>{{ 2026 - brand.founded }}+</strong> years moving freight</div>
+  </div>
+  <div reveal>
+    <span class="kick">About us</span>
+    <h2>A broker that feels like part of your team.</h2>
+    <p>We're a federally regulated, surety-bonded freight broker with contingent cargo coverage. Every shipment gets
+      a vetted carrier, proactive updates and a real person you can call.</p>
+    <a class="btn3 btn3--grad" routerLink="/about">Read More</a>
+  </div>
+</section>
+
+<!-- Modes -->
+<section class="wrap sec">
+  <div class="head" reveal><span class="kick">Ways to ship</span><h2>Choose how it moves</h2></div>
+  <div class="modes">
+    @for (m of modes; track m.label) {
+      <div class="card3 mode" reveal><div class="ic ic--lg"><app-icon [name]="m.icon" [size]="34" /></div><h3>{{ m.label }}</h3></div>
+    }
+  </div>
+</section>
+
+<!-- Services: horizontal rail -->
+<section class="sec" id="services">
+  <div class="wrap railhead">
+    <div><span class="kick">Services</span><h2>Services built around your freight</h2></div>
+    <div class="arrows">
+      <button (click)="scrollRail(-1)" aria-label="Previous"><app-icon name="arrow" [size]="18" class="flip" /></button>
+      <button (click)="scrollRail(1)" aria-label="Next"><app-icon name="arrow" [size]="18" /></button>
+    </div>
+  </div>
+  <div class="rail" #rail>
+    @for (s of services; track s.slug) {
+      <a class="svc" [routerLink]="['/services', s.slug]">
+        <img [src]="s.image" [alt]="s.title" loading="lazy" />
+        <div class="glass svc__b">
+          <h3>{{ serviceName(s) }}</h3><p>{{ s.short }}</p>
+          <span>Read More <app-icon name="arrow" [size]="14" /></span>
+        </div>
+      </a>
+    }
+  </div>
+</section>
+
+<!-- Software: accordion -->
+<section class="wrap sec soft">
+  <div reveal>
+    <span class="kick">Technology</span>
+    <h2>Tools that keep every load visible</h2>
+    @let tab = software[activeTab()];
+    <img class="soft__img" [src]="tab.image" [alt]="tab.name" />
+  </div>
+  <div class="acc">
+    @for (t of software; track t.name; let i = $index) {
+      <div class="acc__item" [class.open]="activeTab() === i">
+        <button (click)="activeTab.set(i)" [attr.aria-expanded]="activeTab() === i">
+          {{ t.name }} <span class="acc__pm">{{ activeTab() === i ? '−' : '+' }}</span>
+        </button>
+        <div class="acc__body">
+          <div>
+            <p>{{ t.text }}</p>
+            <ul>@for (p of t.points; track p) { <li><app-icon name="check" [size]="16" /> {{ p }}</li> }</ul>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- Testimonials on gradient band -->
+<section class="band">
+  <div class="blob b2"></div>
+  <div class="wrap">
+    <div class="head head--w" reveal><span class="kick kick--w">Testimonials</span><h2>Shippers who trust us</h2></div>
+    <div class="carousel">
+      <div class="carousel__track" [style.transform]="'translateX(-' + slide() * 100 + '%)'">
+        @for (t of testimonials; track t.name) {
+          <div class="carousel__slide">
+            <figure class="glass q">
+              <div class="stars">★★★★★</div>
+              <p>“{{ t.text }}”</p>
+              <figcaption><span class="av">{{ t.name[0] }}</span><div><strong>{{ t.name }}</strong><small>{{ t.role }}</small></div></figcaption>
+            </figure>
+          </div>
+        }
+      </div>
+    </div>
+    <div class="dots">
+      @for (t of testimonials; track t.name; let i = $index) {
+        <button [class.on]="slide() === i" (click)="slide.set(i)" [attr.aria-label]="'Show testimonial ' + (i + 1)"></button>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section class="wrap sec">
+  <div class="head" reveal><span class="kick">How it works</span><h2>Simple from the first click</h2></div>
+  <div class="hiw">
+    @for (h of howItWorks; track h.title; let i = $index) {
+      <div class="card3 hiw__c" reveal>
+        <span class="hiw__n">{{ i + 1 }}</span>
+        <h3>{{ h.title }}</h3><p>{{ h.text }}</p>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- Industries -->
+<section class="wrap sec">
+  <div class="head" reveal><span class="kick">Industries</span><h2>Trusted across sectors</h2></div>
+  <div class="inds">
+    @for (ind of industries; track ind.name) {
+      <div class="card3 inds__c" reveal><div class="ic"><app-icon [name]="ind.icon" [size]="22" /></div><span>{{ ind.name }}</span></div>
+    }
+  </div>
+</section>
+
+<!-- Team -->
+<section class="wrap sec">
+  <div class="head" reveal><span class="kick">Leadership</span><h2>Meet our leaders</h2></div>
+  <div class="team">
+    @for (m of team; track m.name) {
+      <div class="card3 person" reveal>
+        <div class="person__img"><img [src]="m.image" [alt]="m.name" loading="lazy" /></div>
+        <h3>{{ m.name }}</h3><span>{{ m.role }}</span>
+        <a [href]="brand.social.linkedin" target="_blank" rel="noopener" aria-label="LinkedIn"><app-icon name="linkedin" [size]="16" /></a>
+      </div>
+    }
+  </div>
+</section>
+
+<section class="wrap members">
+  <div class="card3 members__in">
+    <span>Our credentials</span>
+    @for (m of memberships; track m) { <strong>{{ m }}</strong> }
+  </div>
+</section>
+
+<!-- Blog -->
+<section class="wrap sec" id="blog">
+  <div class="head" reveal><span class="kick">Insight</span><h2>Our blogs</h2></div>
+  <div class="team">
+    @for (p of posts; track p.title) {
+      <a [routerLink]="['/blog', p.slug]" class="card3 post" reveal>
+        <img [src]="p.image" [alt]="p.title" loading="lazy" />
+        <span class="pchip">{{ p.category }}</span>
+        <div class="post__b"><small>{{ p.date }}</small><h3>{{ p.title }}</h3><p>{{ p.excerpt }}</p></div>
+      </a>
+    }
+  </div>
+</section>
+
+<!-- Contact over gradient -->
+<section class="contact" id="contact">
+  <div class="blob b1"></div><div class="blob b3"></div>
+  <div class="wrap contact__grid">
+    <div class="contact__info" reveal>
+      <span class="kick kick--w">Contact us</span>
+      <h2>Let's plan your next shipment.</h2>
+      <div class="glass ci"><app-icon name="pin" /><span>{{ brand.address }}</span></div>
+      <div class="glass ci"><app-icon name="mail" /><span>@for (e of brand.emails; track e) { <a [href]="'mailto:' + e">{{ e }}</a> }</span></div>
+      <div class="glass ci"><app-icon name="phone" /><span>@for (p of brand.phones; track p) { <a>{{ p }}</a> }</span></div>
+    </div>
+    <app-contact-form reveal />
+  </div>
+</section>
+
+<!-- Carrier + careers -->
+<section class="wrap duo">
+  <div class="card3 duo__c duo__c--img" [style.background-image]="'linear-gradient(120deg, rgba(42,31,122,.9), rgba(25,182,214,.6)), url(' + images.carrier + ')'" reveal>
+    <h3>Become a Carrier</h3><p>Steady freight, quick pay and friendly dispatch.</p>
+    <a class="btn3 btn3--w" routerLink="/become-a-carrier">Apply now</a>
+  </div>
+  <div class="card3 duo__c" reveal>
+    <h3>Join our team</h3><p>No current openings — but we're always glad to meet great people.</p>
+    <a class="btn3 btn3--grad" routerLink="/career">View</a>
+  </div>
+</section>

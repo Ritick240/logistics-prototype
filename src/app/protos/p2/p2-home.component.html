@@ -1,0 +1,188 @@
+<!-- Hero -->
+<section class="hero">
+  <div class="hero__glow"></div>
+  <div class="wrap hero__in">
+    <span class="badge" reveal><i></i> Licensed &amp; bonded freight broker · Est. {{ brand.founded }}</span>
+    <h1 reveal>Ship smarter.<br /><span class="grad">Deliver on time.</span></h1>
+    <p reveal>FTL, LTL, intermodal, drayage and hazmat — one team, one dashboard, every load accounted for.</p>
+    <div class="hero__cta" reveal>
+      <a class="b b--lime" routerLink="/request-a-quote">Request a quote <app-icon name="arrow" [size]="16" /></a>
+      <a class="b" routerLink="/" fragment="services">View capabilities</a>
+    </div>
+  </div>
+</section>
+
+<!-- Bento: hero image + stats + values + modes -->
+<section class="wrap bento">
+  <div class="tile tile--img t-a" reveal [style.background-image]="'url(' + images.hero + ')'">
+    <div class="live"><i></i> Live tracking on every load</div>
+  </div>
+  @for (s of stats; track s.label; let i = $index) {
+    <div class="tile tile--stat" [class]="'t-s' + i" reveal>
+      <strong [countUp]="s.value" [prefix]="s.prefix ?? ''" [suffix]="s.suffix"></strong>
+      <span>{{ s.label }}</span>
+    </div>
+  }
+  @for (v of values; track v.title; let i = $index) {
+    <div class="tile" [class]="'t-v' + i" reveal>
+      <div class="ico"><app-icon [name]="v.icon" [size]="22" /></div>
+      <h3>{{ v.title }}</h3><p>{{ v.text }}</p>
+    </div>
+  }
+  <div class="tile t-m" reveal>
+    <h3>Ways we ship</h3>
+    <div class="modes">
+      @for (m of modes; track m.label) { <div><app-icon [name]="m.icon" [size]="26" /><span>{{ m.label }}</span></div> }
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section class="wrap sec about">
+  <div reveal>
+    <span class="eyebrow2">About us</span>
+    <h2>Brokerage built on <span class="grad">trust</span> and tooling.</h2>
+  </div>
+  <div reveal>
+    <p>A federally licensed, surety-bonded freight broker with contingent cargo coverage on every load. We vet every carrier,
+      watch every lane and keep you updated without you having to ask.</p>
+    <a class="b" routerLink="/about">Read more <app-icon name="arrow" [size]="16" /></a>
+  </div>
+</section>
+
+<!-- Services bento -->
+<section class="wrap sec" id="services">
+  <div class="head" reveal><span class="eyebrow2">Capabilities</span><h2>What we move</h2></div>
+  <div class="svc">
+    @for (s of services; track s.slug; let i = $index) {
+      <a class="tile svc__card" [class]="'svc-' + i" [routerLink]="['/services', s.slug]" reveal>
+        <img [src]="s.image" [alt]="s.title" loading="lazy" />
+        <div class="svc__body">
+          <h3>{{ serviceName(s) }} <app-icon name="arrow" [size]="18" /></h3>
+          <p>{{ s.short }}</p>
+        </div>
+      </a>
+    }
+  </div>
+</section>
+
+<!-- Software -->
+<section class="wrap sec">
+  <div class="head" reveal><span class="eyebrow2">Stack</span><h2>Software we run on</h2></div>
+  <div class="seg" role="tablist" reveal>
+    @for (t of software; track t.name; let i = $index) {
+      <button role="tab" [class.on]="activeTab() === i" (click)="activeTab.set(i)">{{ t.name }}</button>
+    }
+  </div>
+  @let tab = software[activeTab()];
+  <div class="tile sw" role="tabpanel">
+    <div>
+      <code>// integration</code>
+      <h3>{{ tab.name }}</h3>
+      <p>{{ tab.text }}</p>
+      <ul>@for (p of tab.points; track p) { <li><app-icon name="check" [size]="16" /> {{ p }}</li> }</ul>
+    </div>
+    <img [src]="tab.image" [alt]="tab.name" />
+  </div>
+</section>
+
+<!-- Testimonials wall -->
+<section class="sec wall">
+  <div class="wrap">
+    <div class="head" reveal><span class="eyebrow2">Testimonials</span><h2>Loved by shippers</h2></div>
+    <div class="wall__cols">
+      @for (col of columns; track $index; let c = $index) {
+        <div class="wall__col" [style.animation-duration]="(28 + c * 6) + 's'">
+          @for (t of col; track $index) {
+            <figure class="tile q">
+              <p>“{{ t.text }}”</p>
+              <figcaption><span class="av">{{ t.name[0] }}</span><div><strong>{{ t.name }}</strong><small>{{ t.role }}</small></div></figcaption>
+            </figure>
+          }
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section class="wrap sec">
+  <div class="head" reveal><span class="eyebrow2">How it works</span><h2>Quote to POD in four moves</h2></div>
+  <div class="hiw">
+    @for (h of howItWorks; track h.title; let i = $index) {
+      <div class="tile hiw__t" reveal>
+        <span class="hiw__n">0{{ i + 1 }}</span>
+        <div class="ico"><app-icon [name]="h.icon" [size]="22" /></div>
+        <h3>{{ h.title }}</h3><p>{{ h.text }}</p>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- Industries -->
+<section class="wrap sec">
+  <div class="tile inds" reveal>
+    <div><span class="eyebrow2">Industries</span><h2>Built for your sector</h2></div>
+    <div class="inds__cloud">
+      @for (ind of industries; track ind.name) { <span><app-icon [name]="ind.icon" [size]="18" /> {{ ind.name }}</span> }
+    </div>
+  </div>
+</section>
+
+<!-- Team -->
+<section class="wrap sec">
+  <div class="head" reveal><span class="eyebrow2">Leadership</span><h2>Meet the team</h2></div>
+  <div class="team">
+    @for (m of team; track m.name) {
+      <div class="tile person" reveal>
+        <img [src]="m.image" [alt]="m.name" loading="lazy" />
+        <div class="person__info"><div><strong>{{ m.name }}</strong><span>{{ m.role }}</span></div>
+          <a [href]="brand.social.linkedin" target="_blank" rel="noopener" aria-label="LinkedIn"><app-icon name="linkedin" [size]="16" /></a></div>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- Members marquee -->
+<section class="marq" aria-label="Credentials">
+  <div class="marq__track">
+    @for (r of [0, 1, 2, 3]; track r) {
+      @for (m of memberships; track m) { <span>✓ <b>{{ m }}</b></span> }
+    }
+  </div>
+</section>
+
+<!-- Blog -->
+<section class="wrap sec" id="blog">
+  <div class="head" reveal><span class="eyebrow2">Insight</span><h2>From the blog</h2></div>
+  <div class="team">
+    @for (p of posts; track p.title) {
+      <a [routerLink]="['/blog', p.slug]" class="tile post" reveal>
+        <img [src]="p.image" [alt]="p.title" loading="lazy" />
+        <div class="post__b"><small><span>{{ p.category }}</span> {{ p.date }}</small><h3>{{ p.title }}</h3><p>{{ p.excerpt }}</p></div>
+      </a>
+    }
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="wrap sec contact" id="contact">
+  <div class="tile contact__info" reveal>
+    <span class="eyebrow2">Contact</span>
+    <h2>Let's talk freight.</h2>
+    <div class="ci"><app-icon name="pin" /><span>{{ brand.address }}</span></div>
+    <div class="ci"><app-icon name="mail" /><span>@for (e of brand.emails; track e) { <a [href]="'mailto:' + e">{{ e }}</a> }</span></div>
+    <div class="ci"><app-icon name="phone" /><span>@for (p of brand.phones; track p) { <a>{{ p }}</a> }</span></div>
+  </div>
+  <app-contact-form reveal />
+</section>
+
+<!-- Carrier + careers -->
+<section class="wrap duo">
+  <a class="tile duo__c duo__c--lime" routerLink="/become-a-carrier" reveal>
+    <h3>Haul with us</h3><p>Steady freight and quick pay. Apply in minutes.</p><app-icon name="arrow" [size]="28" />
+  </a>
+  <a class="tile duo__c" routerLink="/career" reveal>
+    <h3>Join the team</h3><p>No open roles right now — check back soon.</p><app-icon name="arrow" [size]="28" />
+  </a>
+</section>

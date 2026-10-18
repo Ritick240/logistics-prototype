@@ -1,0 +1,9 @@
+{
+  "name": "Northline Logistics Group",
+  "short_name": "NLG",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#ffffff",
+  "theme_color": "#0c2c55",
+  "icons": [{ "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

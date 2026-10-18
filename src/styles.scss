@@ -1,0 +1,169 @@
+// ---------- Theme tokens ----------
+// Reference values; each prototype overrides them under html[data-ui="pN"] so the
+// shared inner pages (services, contact, quote…) restyle with the active design.
+:root {
+  --sw-h: 44px;
+
+  --navy-900: #071a33;
+  --navy-800: #0c2c55;
+  --accent: #e85d04;
+  --accent-ink: #fff;
+  --accent-soft: #fdeee3;
+  --ink: #15202e;
+  --muted: #5d6b7e;
+  --mist: #f3f6fa;
+  --line: #e2e8f0;
+
+  --bg: #fff;
+  --surface: #fff;
+  --heading: var(--navy-800);
+  --primary: var(--navy-800);
+  --primary-ink: #fff;
+  --radius: 12px;
+  --btn-radius: 8px;
+  --shadow: 0 18px 44px rgba(8, 24, 48, .1);
+  --banner-overlay: linear-gradient(90deg, rgba(8, 24, 48, .92), rgba(8, 24, 48, .6));
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-head: 'Poppins', 'Inter', sans-serif;
+}
+
+html[data-ui='p1'] {
+  --accent: #2f5bff; --accent-soft: #eaefff; --ink: #0b0b0c; --muted: #6b6b70; --mist: #f5f5f4; --line: #e6e6e3;
+  --heading: #0b0b0c; --primary: #0b0b0c; --radius: 20px; --btn-radius: 999px; --shadow: none;
+  --banner-overlay: linear-gradient(0deg, rgba(0, 0, 0, .55), rgba(0, 0, 0, .55));
+  --font-body: 'Manrope', system-ui, sans-serif; --font-head: 'Manrope', system-ui, sans-serif;
+}
+html[data-ui='p2'] {
+  --accent: #c6f432; --accent-ink: #0a0b0f; --accent-soft: rgba(198, 244, 50, .12);
+  --ink: #e9ebf1; --muted: #9097a7; --mist: #14161c; --line: #262a33;
+  --bg: #0a0b0f; --surface: #111318; --heading: #f5f6fa; --primary: #1b1e26; --primary-ink: #f5f6fa;
+  --radius: 22px; --btn-radius: 999px; --shadow: 0 0 0 1px #262a33;
+  --banner-overlay: linear-gradient(180deg, rgba(10, 11, 15, .5), #0a0b0f);
+  --font-body: 'Space Grotesk', system-ui, sans-serif; --font-head: 'Space Grotesk', system-ui, sans-serif;
+}
+html[data-ui='p3'] {
+  --accent: #6c4cff; --accent-soft: #eee9ff; --ink: #1b1740; --muted: #625d86; --mist: #f4f2ff; --line: #e3defb;
+  --bg: #fbfaff; --heading: #1b1740; --primary: #2a1f7a; --radius: 28px; --btn-radius: 999px;
+  --shadow: 0 24px 60px rgba(60, 40, 160, .14);
+  --banner-overlay: linear-gradient(120deg, rgba(42, 31, 122, .9), rgba(20, 150, 190, .7));
+  --font-body: 'Plus Jakarta Sans', system-ui, sans-serif; --font-head: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+html[data-ui='p4'] {
+  // Modern Corporate — deep navy + warm orange, soft surfaces
+  --navy-900: #061a33; --navy-800: #0b2c57;
+  --accent: #f26b1d; --accent-ink: #fff; --accent-soft: #fff0e6; --ink: #142235; --muted: #5b6b80; --mist: #f4f7fb; --line: #e1e8f1;
+  --bg: #fff; --surface: #fff; --heading: #0b2c57; --primary: #0b2c57; --primary-ink: #fff;
+  --radius: 18px; --btn-radius: 12px; --shadow: 0 24px 60px rgba(11, 44, 87, .12);
+  --banner-overlay: linear-gradient(110deg, rgba(6, 26, 51, .94) 0%, rgba(11, 44, 87, .7) 60%, rgba(242, 107, 29, .35) 100%);
+  --font-body: 'Inter', system-ui, sans-serif; --font-head: 'Poppins', 'Inter', sans-serif;
+}
+html[data-ui='p5'] {
+  --accent: #c7820a; --accent-soft: #f6ead2; --ink: #1d2a24; --muted: #59645e; --mist: #ebe6da; --line: #d6cfbe;
+  --bg: #f4f1ea; --surface: #fbf9f4; --heading: #16352a; --primary: #1f4d3a; --radius: 2px; --btn-radius: 2px;
+  --shadow: none; --banner-overlay: linear-gradient(90deg, rgba(22, 53, 42, .92), rgba(22, 53, 42, .5));
+  --font-body: 'Inter', system-ui, sans-serif; --font-head: 'Fraunces', Georgia, serif;
+}
+
+// ---------- Base ----------
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--sw-h) + 110px); }
+body {
+  margin: 0; padding-top: var(--sw-h); background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-size: 16px;
+  -webkit-font-smoothing: antialiased; overflow-x: hidden;
+}
+h1, h2, h3, h4 { font-family: var(--font-head); color: inherit; }
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+
+.container { width: 100%; max-width: 1240px; margin: 0 auto; padding: 0 16px; }
+.section { padding: 96px 0; }
+@media (max-width: 560px) { .section { padding: 64px 0; } }
+
+.eyebrow {
+  display: inline-block; color: var(--accent); font-weight: 700; text-transform: uppercase;
+  letter-spacing: 2px; font-size: 13px;
+}
+.title { font-size: clamp(28px, 3.6vw, 42px); margin: 8px 0 18px; color: var(--heading); line-height: 1.2; }
+.head { text-align: center; margin-bottom: 48px; .title { margin-bottom: 0; } }
+.head--light .title { color: #fff; }
+
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+@media (max-width: 1080px) { .grid-4 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 900px) { .grid-3 { grid-template-columns: 1fr; } }
+@media (max-width: 560px) { .grid-4 { grid-template-columns: 1fr; } }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 14px 28px; border-radius: var(--btn-radius); font: inherit; font-weight: 700; font-size: 15px;
+  cursor: pointer; border: 2px solid transparent; transition: all .2s;
+  &--primary { background: var(--accent); color: var(--accent-ink); &:hover { filter: brightness(.92); transform: translateY(-2px); } }
+  &--ghost { border-color: rgba(255,255,255,.7); color: #fff; &:hover { background: #fff; color: var(--navy-800); } }
+  &--outline { border-color: var(--heading); color: var(--heading); background: transparent;
+    &:hover { background: var(--heading); color: var(--bg); } }
+}
+// Scroll-reveal (class "in" is added by an IntersectionObserver)
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; }
+}
+
+// ---------- Forms (shared by every form on the site) ----------
+.form-card {
+  background: var(--surface); border-radius: var(--radius); padding: 34px; box-shadow: var(--shadow);
+  border: 1px solid var(--line); border-top: 4px solid var(--accent);
+  > h3 { margin: 0 0 6px; font-size: 24px; color: var(--heading); }
+  > .form-lead { margin: 0 0 22px; color: var(--muted); font-size: 14px; line-height: 1.6; }
+}
+@media (max-width: 560px) { .form-card { padding: 22px; } }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+.row3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 16px; }
+@media (max-width: 560px) { .row2, .row3 { grid-template-columns: 1fr; } }
+// Block layout (not flex) so label text and the required "*" stay on one line.
+.field {
+  display: block; margin-bottom: 16px;
+  font-size: 13px; font-weight: 700; color: var(--heading);
+  > input, > select, > textarea, > .err { display: block; margin-top: 6px; }
+  input:not([type=checkbox]):not([type=radio]), select, textarea {
+    font: inherit; font-weight: 400; font-size: 15px; padding: 12px 14px; border: 1px solid var(--line);
+    border-radius: min(var(--radius), 10px); background: var(--mist); color: var(--ink); outline: none; width: 100%;
+    transition: border-color .15s, background .15s, box-shadow .15s; color-scheme: light dark;
+    &:focus { border-color: var(--accent); background: var(--surface); box-shadow: 0 0 0 3px var(--accent-soft); }
+  }
+  textarea { resize: vertical; min-height: 120px; }
+  .err { color: #d93636; font-weight: 600; font-size: 12px; }
+  &.invalid input, &.invalid select, &.invalid textarea { border-color: #d93636; }
+  .hint { color: var(--muted); font-weight: 400; font-size: 12px; }
+}
+.req { color: #d93636; }
+.checks-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; }
+.check-pill {
+  display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border: 1px solid var(--line); border-radius: 999px;
+  font-weight: 600; font-size: 14px; cursor: pointer; background: var(--mist); color: var(--ink); user-select: none;
+  input { accent-color: var(--accent); }
+  &:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); }
+}
+.consent { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: var(--muted); margin: 4px 0 18px; line-height: 1.5;
+  input { margin-top: 3px; accent-color: var(--accent); } a { color: var(--accent); text-decoration: underline; } }
+.hp { position: absolute !important; left: -9999px !important; width: 1px; height: 1px; overflow: hidden; } // spam honeypot
+.btn[disabled] { opacity: .6; cursor: progress; transform: none !important; }
+.spinner { width: 16px; height: 16px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: spin .7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.form-done { text-align: center; padding: 20px 0;
+  .tick { width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; margin: 0 auto 16px; background: var(--accent-soft); color: var(--accent); }
+  h3 { margin: 0 0 8px; color: var(--heading); } p { color: var(--muted); line-height: 1.6; margin: 0 0 20px; } }
+
+// Keyboard focus that's visible in every design
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+// Long-form text (legal, blog)
+.prose { max-width: 760px; font-size: 17px; line-height: 1.85; color: var(--ink);
+  h2 { font-size: 26px; margin: 40px 0 10px; color: var(--heading); }
+  p { margin: 0 0 18px; color: var(--muted); } }
+
+// Newsletter block inside footers (inherits each footer's colours)
+.nl-wrap { margin: 18px 0; small { display: block; margin-bottom: 8px; opacity: .8; font-size: 13px; } }

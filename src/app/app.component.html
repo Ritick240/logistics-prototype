@@ -1,0 +1,20 @@
+<a class="skip" href="#main">Skip to content</a>
+<app-design-switcher />
+
+@switch (ui.variant()) {
+  @case ('p1') { <app-p1-shell><router-outlet /></app-p1-shell> }
+  @case ('p2') { <app-p2-shell><router-outlet /></app-p2-shell> }
+  @case ('p3') { <app-p3-shell><router-outlet /></app-p3-shell> }
+  @case ('p4') { <app-p4-shell><router-outlet /></app-p4-shell> }
+  @case ('p5') { <app-p5-shell><router-outlet /></app-p5-shell> }
+  @default {
+    <app-header />
+    <main id="main"><router-outlet /></main>
+    <app-footer />
+  }
+}
+
+<app-floating-actions />
+<app-feedback />
+<app-cookie-consent />
+<app-toasts />

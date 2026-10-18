@@ -1,0 +1,240 @@
+<!-- Hero: headline + quick quote -->
+<section class="hero">
+  <div class="container hero__grid">
+    <div class="hero__copy" reveal>
+      <span class="pill"><app-icon name="shield" [size]="14" /> Licensed &amp; bonded freight broker</span>
+      <h1>{{ brand.tagline }}</h1>
+      <p>Truckload, LTL, intermodal, drayage and hazmat — booked with vetted carriers and managed by a team you can actually reach.</p>
+      <ul class="ticks">
+        <li><app-icon name="check" [size]="16" /> Quotes in about an hour</li>
+        <li><app-icon name="check" [size]="16" /> US &amp; Canada coverage</li>
+        <li><app-icon name="check" [size]="16" /> 24/7 in-transit support</li>
+      </ul>
+    </div>
+    <form class="quick" (ngSubmit)="startQuote()" reveal>
+      <h2>Price a lane</h2>
+      <p>Start here — finish the details on the next step.</p>
+      <label>Pickup<input name="origin" [(ngModel)]="quick.origin" placeholder="City, State or ZIP" /></label>
+      <label>Delivery<input name="destination" [(ngModel)]="quick.destination" placeholder="City, State or ZIP" /></label>
+      <label>Mode
+        <select name="mode" [(ngModel)]="quick.mode">
+          @for (m of modes; track m.label) { <option>{{ m.label }}</option> }
+          <option>Not sure</option>
+        </select>
+      </label>
+      <button class="btn btn--primary" type="submit">Get my rate <app-icon name="arrow" [size]="16" /></button>
+      <a class="quick__alt" [href]="tel(brand.phones[0])">or call {{ brand.phones[0] }}</a>
+    </form>
+  </div>
+</section>
+
+<!-- Stats strip -->
+<section class="strip">
+  <div class="container strip__grid">
+    @for (s of stats; track s.label) {
+      <div><strong [countUp]="s.value" [prefix]="s.prefix ?? ''" [suffix]="s.suffix"></strong><span>{{ s.label }}</span></div>
+    }
+  </div>
+</section>
+
+<!-- Services selector -->
+<section class="section" id="services">
+  <div class="container">
+    <div class="intro" reveal>
+      <span class="eyebrow">Services</span>
+      <h2 class="title">One partner for every way you ship</h2>
+    </div>
+    <div class="svc">
+      <div class="svc__list" role="tablist">
+        @for (s of services; track s.slug; let i = $index) {
+          <button role="tab" [class.on]="activeService() === i" [attr.aria-selected]="activeService() === i" (click)="activeService.set(i)">
+            <app-icon [name]="serviceIcon(s.slug)" [size]="22" />
+            <span><b>{{ serviceName(s) }}</b><small>{{ s.points[0] }}</small></span>
+          </button>
+        }
+      </div>
+      @let s = services[activeService()];
+      <div class="svc__panel" role="tabpanel">
+        <img [src]="s.image" [alt]="s.title" />
+        <div class="svc__body">
+          <h3>{{ serviceName(s) }}</h3>
+          <p>{{ s.short }}</p>
+          <ul>@for (p of s.points; track p) { <li><app-icon name="check" [size]="16" /> {{ p }}</li> }</ul>
+          <a class="link" [routerLink]="['/services', s.slug]">Explore {{ serviceName(s) }} <app-icon name="arrow" [size]="16" /></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section class="section soft">
+  <div class="container">
+    <div class="intro intro--c" reveal>
+      <span class="eyebrow">How it works</span>
+      <h2 class="title">From quote to proof of delivery in four steps</h2>
+    </div>
+    <ol class="steps">
+      @for (h of howItWorks; track h.title; let i = $index) {
+        <li reveal>
+          <span class="steps__n">{{ i + 1 }}</span>
+          <app-icon [name]="h.icon" [size]="26" />
+          <h3>{{ h.title }}</h3>
+          <p>{{ h.text }}</p>
+        </li>
+      }
+    </ol>
+  </div>
+</section>
+
+<!-- Why us -->
+<section class="section" id="about">
+  <div class="container why">
+    <div class="why__media" reveal>
+      <img [src]="images.about" alt="Warehouse team preparing outbound freight" />
+      <div class="badges">
+        @for (m of memberships; track m) { <span><app-icon name="check" [size]="14" /> {{ m }}</span> }
+      </div>
+    </div>
+    <div reveal>
+      <span class="eyebrow">Why {{ brand.short }}</span>
+      <h2 class="title">A brokerage built around accountability</h2>
+      <p class="lead">Since {{ brand.founded }} we've grown by doing the basics exceptionally well — screening carriers properly,
+        pricing honestly and staying on every load until it's delivered.</p>
+      <div class="why__list">
+        @for (v of values; track v.title) {
+          <div><span class="ic"><app-icon [name]="v.icon" [size]="22" /></span><div><h3>{{ v.title }}</h3><p>{{ v.text }}</p></div></div>
+        }
+      </div>
+      <a class="btn btn--outline" routerLink="/about">About the company</a>
+    </div>
+  </div>
+</section>
+
+<!-- Industries -->
+<section class="section soft">
+  <div class="container">
+    <div class="intro intro--row" reveal>
+      <div><span class="eyebrow">Industries</span><h2 class="title">Experience across your sector</h2></div>
+      <a class="link" routerLink="/contact">Don't see yours? Ask us <app-icon name="arrow" [size]="16" /></a>
+    </div>
+    <div class="ind">
+      @for (ind of industries; track ind.name) {
+        <div class="ind__tile" reveal><app-icon [name]="ind.icon" [size]="28" /><span>{{ ind.name }}</span></div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Technology -->
+<section class="section">
+  <div class="container">
+    <div class="intro intro--c" reveal>
+      <span class="eyebrow">Technology</span>
+      <h2 class="title">Visibility built into every shipment</h2>
+    </div>
+    <div class="tech">
+      @for (t of software; track t.name) {
+        <div class="tech__card" reveal>
+          <h3>{{ t.name }}</h3>
+          <p>{{ t.text }}</p>
+          <ul>@for (p of t.points; track p) { <li>{{ p }}</li> }</ul>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="section quotes">
+  <div class="container quotes__grid">
+    <div reveal>
+      <span class="eyebrow">Client feedback</span>
+      <h2 class="title title--w">Shippers who'd ship with us again</h2>
+      <div class="quotes__nav">
+        <button (click)="prev()" aria-label="Previous"><app-icon name="arrow" [size]="18" class="flip" /></button>
+        <button (click)="next()" aria-label="Next"><app-icon name="arrow" [size]="18" /></button>
+      </div>
+    </div>
+    <div class="quotes__cards">
+      @for (t of visibleQuotes; track t.name) {
+        <figure class="q">
+          <app-icon name="quote" [size]="28" />
+          <blockquote>{{ t.text }}</blockquote>
+          <figcaption><span class="av">{{ t.name[0] }}</span><span><b>{{ t.name }}</b><small>{{ t.role }}</small></span></figcaption>
+        </figure>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Team -->
+<section class="section">
+  <div class="container">
+    <div class="intro" reveal><span class="eyebrow">Leadership</span><h2 class="title">The people behind your freight</h2></div>
+    <div class="team">
+      @for (m of team; track m.name) {
+        <div class="member" reveal>
+          <img [src]="m.image" [alt]="m.name" loading="lazy" />
+          <div><h3>{{ m.name }}</h3><span>{{ m.role }}</span>
+            <a [href]="brand.social.linkedin" target="_blank" rel="noopener" aria-label="LinkedIn"><app-icon name="linkedin" [size]="16" /></a></div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Insights -->
+<section class="section soft" id="blog">
+  <div class="container">
+    <div class="intro intro--row" reveal>
+      <div><span class="eyebrow">Insights</span><h2 class="title">Guides for smarter shipping</h2></div>
+      <a class="link" routerLink="/blog">All articles <app-icon name="arrow" [size]="16" /></a>
+    </div>
+    <div class="ins">
+      @for (p of posts; track p.slug; let first = $first) {
+        <a class="ins__card" [class.ins__card--big]="first" [routerLink]="['/blog', p.slug]" reveal>
+          <img [src]="p.image" [alt]="p.title" loading="lazy" />
+          <div><small>{{ p.category }} · {{ p.readMins }} min read</small><h3>{{ p.title }}</h3>
+            @if (first) { <p>{{ p.excerpt }}</p> }</div>
+        </a>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Dual CTA -->
+<section class="section">
+  <div class="container duo">
+    <div class="duo__c duo__c--ship" reveal>
+      <app-icon name="boxes" [size]="32" />
+      <h3>Shipping freight?</h3>
+      <p>Tell us about your lanes and get a dedicated rep.</p>
+      <a class="btn btn--primary" routerLink="/request-a-quote">Request a quote</a>
+    </div>
+    <div class="duo__c duo__c--haul" [style.background-image]="'linear-gradient(rgba(7,26,51,.85), rgba(7,26,51,.85)), url(' + images.carrier + ')'" reveal>
+      <app-icon name="truck" [size]="32" />
+      <h3>Hauling freight?</h3>
+      <p>Join our carrier network for consistent loads and quick pay.</p>
+      <a class="btn btn--ghost" routerLink="/become-a-carrier">Apply as a carrier</a>
+    </div>
+  </div>
+  <p class="container hiring">Interested in working with us? <a routerLink="/career">See careers →</a></p>
+</section>
+
+<!-- Contact -->
+<section class="section soft" id="contact">
+  <div class="container contact">
+    <div reveal>
+      <span class="eyebrow">Get in touch</span>
+      <h2 class="title">Talk to a logistics specialist</h2>
+      <ul class="cinfo">
+        <li><app-icon name="pin" /><span>{{ brand.address }}</span></li>
+        <li><app-icon name="phone" /><span>@for (p of brand.phones; track p) { {{ p }}<br /> }</span></li>
+        <li><app-icon name="mail" /><span>@for (e of brand.emails; track e) { <a [href]="'mailto:' + e">{{ e }}</a><br /> }</span></li>
+        <li><app-icon name="star" /><span>{{ brand.hours }}</span></li>
+      </ul>
+    </div>
+    <app-contact-form heading="Send a message" reveal />
+  </div>
+</section>
